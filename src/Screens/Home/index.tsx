@@ -35,12 +35,11 @@ const Home: React.FC = () => {
     if (!threadId) {
       try {
         const response = await axios.post(
-          "https://retune.so/api/chat/11ef333e-4dd1-0e70-8620-27677908c421/new-thread",
+          "https://trade-ideas-backend.vercel.app/api/new-thread",
           {},
           {
             headers: {
               "Content-Type": "application/json",
-              "X-Workspace-API-Key": "11eee940-b39f-3bc0-b1e0-edab9493f797",
             },
           }
         );
@@ -71,27 +70,18 @@ const Home: React.FC = () => {
     setSearchTerm("");
     try {
       const response = await axios.post(
-        "https://retune.so/api/chat/11ef333e-4dd1-0e70-8620-27677908c421/response",
-        {
-          threadId: "required",
-          input: "required",
-        },
+        "https://trade-ideas-backend.vercel.app/api/response",
+        { threadId, input },
         {
           headers: {
             "Content-Type": "application/json",
-            "X-Workspace-API-Key": "11eee940-b39f-3bc0-b1e0-edab9493f797",
           },
         }
       );
 
       console.log("Prompt: ", input);
       console.log("Response: ", response.data);
-      let responseData = response.data.response.value;
-
-      // Replace \n\n with \n\n (Markdown paragraph break) and \n with '  \n' (Markdown line break)
-      responseData = responseData
-        .replace(/\n \n/g, "\n\n")
-        .replace(/\n/g, "\n");
+      const responseData = response.data.response.value;
 
       setConversations((prevConversations) => {
         return prevConversations.map((conversation) =>
@@ -260,10 +250,7 @@ const Home: React.FC = () => {
                     {!conversation.isLoading ? (
                       index === conversations.length - 1 && currentResponse ? (
                         <div className="text-gray-700 text-base text-left">
-                          <Markdown
-                            remarkPlugins={[remarkGfm]}
-                            className="markdown"
-                          >
+                          <Markdown remarkPlugins={[remarkGfm]}>
                             {typedResponse}
                           </Markdown>
                         </div>
