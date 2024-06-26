@@ -29,73 +29,71 @@ const Home: React.FC = () => {
   };
 
   const handleSearch = async () => {
-    console.log("Submitting: ", searchTerm);
-    setLoading(true);
-    setHasSearched(true);
-    if (!threadId) {
-      try {
-        const response = await axios.post(
-          "https://trade-ideas-backend.vercel.app/api/new-thread",
-          {},
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
-        const newThreadId = response.data.threadId;
-        setThreadId(newThreadId);
-        console.log("New Thread ID: ", newThreadId);
-        await continueConversation(newThreadId, searchTerm);
-      } catch (error) {
-        console.error("Error creating thread: ", error);
-      } finally {
-        setLoading(false);
+      console.log("Submitting: ", searchTerm);
+      setLoading(true);
+      setHasSearched(true);
+      if (!threadId) {
+        try {
+          const response = await axios.post(
+            "https://trade-ideas-backend.vercel.app/api/new-thread",
+            {},
+            {
+              headers: {
+                "Content-Type": "application/json",
+              }
+            }
+          );
+          const newThreadId = response.data.threadId;
+          setThreadId(newThreadId);
+          console.log("New Thread ID: ", newThreadId);
+          await continueConversation(newThreadId, searchTerm);
+        } catch (error) {
+          console.error("Error creating thread: ", error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        await continueConversation(threadId, searchTerm);
       }
-    } else {
-      await continueConversation(threadId, searchTerm);
-    }
-    setSearchTerm("");
-    setHasSearched(true);
+      setSearchTerm("");
+      setHasSearched(true);
   };
   
   const continueConversation = async (threadId: string | null, input: string) => {
-    setConversations((prevConversations) => [
-      ...prevConversations,
-      { prompt: input, response: "", isLoading: true },
-    ]);
-    setSearchTerm("");
-    try {
-      const response = await axios.post(
-        "https://trade-ideas-backend.vercel.app/api/response",
-        { threadId, input },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-  
-      console.log("Prompt: ", input);
-      console.log("Response: ", response.data);
-      const responseData = response.data.response.value;
-  
-      setConversations((prevConversations) => {
-        return prevConversations.map((conversation) =>
-          conversation.prompt === input
-            ? { ...conversation, response: responseData, isLoading: false }
-            : conversation
+      setConversations((prevConversations) => [
+        ...prevConversations,
+        { prompt: input, response: "", isLoading: true },
+      ]);
+      setSearchTerm("");
+      try {
+        const response = await axios.post(
+          "https://trade-ideas-backend.vercel.app/api/response",
+          { threadId, input },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
         );
-      });
-      setCurrentResponse(responseData);
-      setTypedResponse("");
-    } catch (error) {
-      console.error("Error continuing conversation: ", error);
-    } finally {
-      setLoading(false);
-    }
+    
+        console.log("Prompt: ", input);
+        console.log("Response: ", response.data);
+        const responseData = response.data.response.value;
+    
+        setConversations((prevConversations) => {
+          return prevConversations.map((conversation) =>
+            conversation.prompt === input
+              ? { ...conversation, response: responseData, isLoading: false }
+              : conversation
+          );
+        });
+        setCurrentResponse(responseData);
+        setTypedResponse("");
+      } catch (error) {
+        console.error("Error continuing conversation: ", error);
+      } finally {
+        setLoading(false);
+      }
   };
 
 
