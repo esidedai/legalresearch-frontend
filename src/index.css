@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  animation: fadeIn 2s;
+}
+
+.markdown ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+}
+
+.markdown ul li {
+  margin-bottom: 0.5em;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
