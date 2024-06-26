@@ -28,6 +28,8 @@ const Home: React.FC = () => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
+  const axios = require('axios');
+
   const handleSearch = async () => {
     console.log("Submitting: ", searchTerm);
     setLoading(true);
