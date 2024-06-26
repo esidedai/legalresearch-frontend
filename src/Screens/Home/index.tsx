@@ -98,6 +98,7 @@ const Home: React.FC = () => {
     }
   };
 
+
   useEffect(() => {
     if (currentResponse) {
       let index = 0;
