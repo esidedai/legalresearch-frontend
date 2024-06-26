@@ -12,7 +12,6 @@ interface Conversation {
 }
 
 const Home: React.FC = () => {
-  const axios = require('axios');
   const [searchTerm, setSearchTerm] = useState("");
   const [threadId, setThreadId] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
