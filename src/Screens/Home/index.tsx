@@ -41,6 +41,7 @@ const Home: React.FC = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         );
         const newThreadId = response.data.threadId;
@@ -58,11 +59,8 @@ const Home: React.FC = () => {
     setSearchTerm("");
     setHasSearched(true);
   };
-
-  const continueConversation = async (
-    threadId: string | null,
-    input: string
-  ) => {
+  
+  const continueConversation = async (threadId: string | null, input: string) => {
     setConversations((prevConversations) => [
       ...prevConversations,
       { prompt: input, response: "", isLoading: true },
@@ -76,13 +74,14 @@ const Home: React.FC = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
-
+  
       console.log("Prompt: ", input);
       console.log("Response: ", response.data);
       const responseData = response.data.response.value;
-
+  
       setConversations((prevConversations) => {
         return prevConversations.map((conversation) =>
           conversation.prompt === input
