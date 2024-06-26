@@ -12,6 +12,7 @@ interface Conversation {
 }
 
 const Home: React.FC = () => {
+  const axios = require('axios');
   const [searchTerm, setSearchTerm] = useState("");
   const [threadId, setThreadId] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -27,8 +28,6 @@ const Home: React.FC = () => {
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
-
-  const axios = require('axios');
 
   const handleSearch = async () => {
     console.log("Submitting: ", searchTerm);
