@@ -35,7 +35,7 @@ const Home: React.FC = () => {
       if (!threadId) {
         try {
           const response = await axios.post(
-            "https://trade-ideas-backend.vercel.app/api/new-thread",
+            "https://ti.aitaskmasters.net/api/new-thread",
             {},
             {
               headers: {
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
       setSearchTerm("");
       try {
         const response = await axios.post(
-          "https://trade-ideas-backend.vercel.app/api/response",
+          "https://ti.aitaskmasters.net/api/response",
           { threadId, input },
           {
             headers: {
