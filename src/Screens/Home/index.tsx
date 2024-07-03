@@ -105,7 +105,7 @@ const Home: React.FC = () => {
       const interval = setInterval(() => {
         if (index < currentResponse.length) {
           setTypedResponse((prev) => prev + currentResponse[index]);
-          index += 1; // Increment after appending.
+          index += 1;  // Increment index after appending the character
         } else {
           clearInterval(interval);
         }
@@ -113,7 +113,6 @@ const Home: React.FC = () => {
       return () => clearInterval(interval);
     }
   }, [currentResponse]);
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white px-4">
