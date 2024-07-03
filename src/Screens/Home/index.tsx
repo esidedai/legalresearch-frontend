@@ -59,60 +59,40 @@ const Home: React.FC = () => {
     setHasSearched(true);
   };
 
-  const continueConversation = async (
-    threadId: string | null,
-    input: string
-  ) => {
-    setConversations((prevConversations) => [
-      ...prevConversations,
-      { prompt: input, response: "", isLoading: true },
-    ]);
-    setSearchTerm("");
-    try {
-      const response = await axios.post(
-        "https://ti.aitaskmasters.net/api/response",
-        { threadId, input },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("Prompt: ", input);
-      console.log("Response: ", response.data);
-      const responseData = response.data.response.value;
-
-      setConversations((prevConversations) => {
-        return prevConversations.map((conversation) =>
-          conversation.prompt === input
-            ? { ...conversation, response: responseData, isLoading: false }
-            : conversation
-        );
-      });
-      setCurrentResponse(responseData);
-      setTypedResponse("");
-    } catch (error) {
-      console.error("Error continuing conversation: ", error);
-    } finally {
-      setLoading(false);
-    }
+  const continueConversation = async (threadId: string | null, input: string) => {
+    setConversations(prev => [...prev, { prompt: input, response: "", isLoading: true }]);
+      try {
+          const response = await axios.post(`https://ti.aitaskmasters.net/api/response`, { threadId, input }, {
+              headers: { "Content-Type": "application/json" }
+          });
+          const responseData = response.data && response.data.response && response.data.response.value
+              ? response.data.response.value
+              : "No response available"; // Handle undefined or null values
+  
+          setConversations(prev => prev.map(conv => conv.prompt === input ? { ...conv, response: responseData, isLoading: false } : conv));
+          setCurrentResponse(responseData);
+          setTypedResponse("");
+      } catch (error) {
+          console.error("Error in continuing conversation: ", error);
+      }
   };
 
   useEffect(() => {
-    if (currentResponse) {
-      let index = 0;
-      const interval = setInterval(() => {
-        if (index < currentResponse.length) {
-          setTypedResponse((prev) => prev + currentResponse[index]);
-          index += 1;  // Increment index after appending the character
-        } else {
-          clearInterval(interval);
-        }
-      }, 10);
-      return () => clearInterval(interval);
-    }
-  }, [currentResponse]);
+      if (currentResponse) {
+          let index = 0;
+          setTypedResponse(""); // Clears previous text immediately when new response is ready
+          const interval = setInterval(() => {
+              if (index < currentResponse.length) {
+                  setTypedResponse(prev => prev + currentResponse[index]);
+                  index++;
+              } else {
+                  clearInterval(interval); // Ensures interval stops right after finishing
+              }
+          }, 10);
+          return () => clearInterval(interval); // Clean up to avoid memory leaks
+      }
+  }, [currentResponse]); // Depend on currentResponse to restart effect when it changes
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white px-4">
