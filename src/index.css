@@ -6,6 +6,10 @@
   animation: fadeIn 2s;
 }
 
+.markdown {
+  text-align: left;
+}
+
 .markdown ul {
   list-style-type: disc;
   padding-left: 1.5em;
@@ -17,6 +21,7 @@
 
 .markdown p {
   margin-top: 1em; /* Ensure there's space between paragraphs */
+  text-align: left;
 }
 
 @keyframes fadeIn {
