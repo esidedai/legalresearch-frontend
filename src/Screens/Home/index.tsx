@@ -140,7 +140,7 @@ const Home: React.FC = () => {
       <div className="w-full max-w-2xl">
         {!hasSearched ? (
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-black mb-5 mt-5 bg-custom-gradient">
+            <h1 className="text-5xl font-bold text-black mb-5 bg-custom-gradient">
               Search smarter & faster
             </h1>
             <div className="flex justify-center items-center">
@@ -150,7 +150,7 @@ const Home: React.FC = () => {
                 placeholder="Ask anything"
                 onChange={handleInputChange}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                className="w-full py-3 mb-3 pl-4 pr-20 text-lg text-gray-700 bg-white border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 shadow-[2px_2px_38px_0px_rgba(0,0,0,0.25),0px_-2px_4px_0px_rgba(0,0,0,0.25)_inset,1px_2px_4px_0px_rgba(0,0,0,0.25)_inset]"
+                className="w-full py-3 pl-4 pr-20 text-lg text-gray-700 bg-white border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-700 shadow-[2px_2px_38px_0px_rgba(0,0,0,0.25),0px_-2px_4px_0px_rgba(0,0,0,0.25)_inset,1px_2px_4px_0px_rgba(0,0,0,0.25)_inset]"
               />
               <button
                 onClick={handleSearch}
