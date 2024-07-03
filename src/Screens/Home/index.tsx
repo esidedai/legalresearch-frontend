@@ -105,15 +105,15 @@ const Home: React.FC = () => {
       const interval = setInterval(() => {
         if (index < currentResponse.length) {
           setTypedResponse((prev) => prev + currentResponse[index]);
-          index += 1;
+          index += 1; // Increment after appending.
         } else {
           clearInterval(interval);
-          setTypedResponse(currentResponse);
         }
       }, 10);
       return () => clearInterval(interval);
     }
   }, [currentResponse]);
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white px-4">
@@ -524,7 +524,7 @@ const Home: React.FC = () => {
                     </div>
                     {!conversation.isLoading ? (
                       index === conversations.length - 1 && currentResponse ? (
-                        <div className="text-gray-700 text-base text-left">
+                        <div className="markdown">
                           <Markdown remarkPlugins={[remarkGfm]}>
                             {typedResponse}
                           </Markdown>
