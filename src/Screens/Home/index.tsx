@@ -115,27 +115,14 @@ const Home: React.FC = () => {
     }
   }, [currentResponse]);
 
+  const handleHomeClick = () => {
+    window.location.reload();
+    setHasSearched(false);
+  }
+
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-white px-4">
-      {hasSearched && (
-        <>
-          <div
-            data-tooltip-target="tooltip-default"
-            onClick={() => setHasSearched(false)}
-            className=" absolute w-12 h-12 rounded-full bg-[#333333] top-4 left-4 flex items-center justify-center cursor-pointer"
-          >
-            <IoHome className="text-3xl text-white" />
-          </div>
-          <div
-            id="tooltip-default"
-            role="tooltip"
-            className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
-          >
-            Tooltip content
-            <div className="tooltip-arrow" data-popper-arrow></div>
-          </div>
-        </>
-      )}
 
       <div className="w-full max-w-2xl">
         {!hasSearched ? (
@@ -504,6 +491,14 @@ const Home: React.FC = () => {
           </div>
         ) : (
           <div className="relative text-center mb-12">
+            <div className="sticky top-0 z-10 bg-white shadow text-center flex justify-center">
+              <div className="p-4 text-3xl font-bold text-center">
+                <IoHome
+                  className="text-3xl text-center cursor-pointer"
+                  onClick={handleHomeClick}
+                />
+              </div>
+            </div>
             {conversations.map((conversation, index) => (
               <div
                 key={index}
@@ -524,7 +519,7 @@ const Home: React.FC = () => {
                     </div>
                     {!conversation.isLoading ? (
                       index === conversations.length - 1 && currentResponse ? (
-                        <div className="markdown">
+                        <div className="text-gray-700 text-base text-left">
                           <Markdown remarkPlugins={[remarkGfm]}>
                             {typedResponse}
                           </Markdown>
