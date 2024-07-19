@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     if (!threadId) {
       try {
         const response = await axios.post(
-          "https://ti.aitaskmasters.net/api/new-thread",
+          "http://localhost:3000/api/new-thread",
           {},
           {
             headers: {
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
     setSearchTerm("");
     try {
       const response = await axios.post(
-        "https://ti.aitaskmasters.net/api/response",
+        "http://localhost:3000/api/response",
         { threadId, input },
         {
           headers: {
@@ -150,7 +150,7 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap p-4 ">
+            {/* <div className="flex flex-wrap p-4 ">
               <div className="w-1/2 p-2">
                 <div
                   onClick={() =>
@@ -487,7 +487,7 @@ const Home: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         ) : (
           <div className="relative text-center mb-12">
