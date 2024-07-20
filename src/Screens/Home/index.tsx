@@ -35,7 +35,7 @@ const Home: React.FC = () => {
     if (!threadId) {
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/new-thread",
+          "http://ti.aitaskmasters.net/api/new-thread",
           {},
           {
             headers: {
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
     setSearchTerm("");
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/response",
+        "http://ti.aitaskmasters.net/api/response",
         { threadId, input },
         {
           headers: {
