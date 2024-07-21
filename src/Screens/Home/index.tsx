@@ -101,7 +101,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (currentResponse) {
-      setTypedResponse("");  // Ensure typedResponse is reset before starting the new response
       let index = 0;
       const interval = setInterval(() => {
         if (index < currentResponse.length) {
@@ -109,12 +108,12 @@ const Home: React.FC = () => {
           index += 1;
         } else {
           clearInterval(interval);
+          setTypedResponse(currentResponse);
         }
       }, 10);
       return () => clearInterval(interval);
     }
   }, [currentResponse]);
-
 
   const handleHomeClick = () => {
     window.location.reload();
