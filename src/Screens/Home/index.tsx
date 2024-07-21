@@ -101,6 +101,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (currentResponse) {
+      setTypedResponse(""); 
       let index = 0;
       const interval = setInterval(() => {
         if (index < currentResponse.length) {
