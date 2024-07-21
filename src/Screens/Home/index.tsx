@@ -105,7 +105,7 @@ const Home: React.FC = () => {
       let index = 0;
       const interval = setInterval(() => {
         if (index < currentResponse.length) {
-          setTypedResponse((prev) => prev + currentResponse.charAt(index));
+          setTypedResponse((prev) => prev + currentResponse[index]);
           index += 1;
         } else {
           clearInterval(interval);
